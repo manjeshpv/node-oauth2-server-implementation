@@ -4,7 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var config = require('./config.js')
+var authenticate = require('./components/oauth/authenticate')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -22,8 +23,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+if (config.seedDB) { require('./components/oauth/seed'); }
+
+/** Public Area **/
+
+require('./components/oauth')(app)
+
+/** Control Private through OAuth **/
+
 app.use('/', routes);
 app.use('/users', users);
+
+app.get('/secure', authenticate(), function(req,res){
+  res.json({message: 'Secure data'})
+});
+
+app.get('/me', authenticate(), function(req,res){
+  res.json({me: req.user})
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
