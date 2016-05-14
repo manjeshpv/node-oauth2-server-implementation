@@ -39,7 +39,18 @@ app.get('/secure', authenticate(), function(req,res){
 });
 
 app.get('/me', authenticate(), function(req,res){
-  res.json({me: req.user})
+  res.json({
+    me: req.user,
+    messsage: 'Authorization success, Without Scopes, Try accessing /profile with `profile` scope',
+    description: 'Try postman https://www.getpostman.com/collections/37afd82600127fbeef28',
+    more: 'pass `profile` scope while Authorize'
+  })
+});
+
+app.get('/profile', authenticate({scope:'profile'}), function(req,res){
+  res.json({
+    profile: req.user
+  })
 });
 
 // catch 404 and forward to error handler

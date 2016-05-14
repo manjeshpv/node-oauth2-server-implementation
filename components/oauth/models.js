@@ -14,7 +14,7 @@ function getAccessToken(bearerToken) {
   return OAuthAccessToken
     .findOne({
       where: {access_token: bearerToken},
-      attributes: [['access_token', 'accessToken'], ['expires', 'accessTokenExpiresAt']],
+      attributes: [['access_token', 'accessToken'], ['expires', 'accessTokenExpiresAt'],'scope'],
       include: [
         {
           model: User,
@@ -27,7 +27,7 @@ function getAccessToken(bearerToken) {
       var token = accessToken.toJSON();
       token.user = token.User;
       token.client = token.OAuthClient;
-      token.scope = 'consultant'
+      token.scope = token.scope
       return token;
     })
     .catch(function (err) {
@@ -212,7 +212,6 @@ function getUserFromClient(client) {
 }
 
 function getRefreshToken(refreshToken) {
-  console.log("getRefreshToken", refreshToken)
   if (!refreshToken || refreshToken === 'undefined') return false
 
   return OAuthRefreshToken
@@ -229,7 +228,7 @@ function getRefreshToken(refreshToken) {
         refreshTokenExpiresAt: savedRT ? new Date(savedRT.expires) : null,
         refreshToken: refreshToken,
         refresh_token: refreshToken,
-        scope: 'consultant'
+        scope: savedRT.scope
       };
       return tokenTemp;
 
