@@ -6,10 +6,11 @@ var oauthServer = require('oauth2-server');
 var Request = oauthServer.Request;
 var Response = oauthServer.Response;
 var db = require('./sqldb')
-
-var oauth = new oauthServer({
-  model: require('./models.js')
-});
+var config = require('../../config');
+if(config.db === 'mongo'){
+  db = require('./mongodb')
+}
+var oauth = require('./oauth')
 
 module.exports = function(options){
   var options = options || {};
@@ -27,6 +28,18 @@ module.exports = function(options){
         // Request is authorized.
         // Todo: Temporary for req.user or req.session
         var bearer = req.headers.authorization.replace('Bearer','').replace('bearer','').trim()
+        if(config.db==='mongo'){
+          return db.OAuthAccessToken.findOne({ access_token: bearer})
+            .populate('User')
+            .then(function(aT){
+            req.user = aT ? aT.User : {};
+            next()
+          }).catch(function(err){
+            console.log("Error while getting session",err)
+            req.user = null
+            next()
+          })
+        }
         return db.OAuthAccessToken.findOne({
           include: [{
             model:db.User,

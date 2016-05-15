@@ -11,6 +11,11 @@ module.exports = {
     logging: true,
     timezone: '+05:30',
   },
+  mongo: {
+    uri: 'mongodb://username:password@domain.mongolab.com:63439/tsc'
+  },
   seedDB:false,
-  seedDBForce:true
+  seedMongoDB:false,
+  seedDBForce:true,
+  db:'sql' // mongo,sql if you want to use any SQL change dialect above in sql config
 }

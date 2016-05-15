@@ -11,6 +11,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "jade": "~1.11.0",
+    "mongoose": "^4.4.17",
     "morgan": "~1.6.1",
     "mysql": "^2.10.2",
     "oauth2-server": "^3.0.0-b2",

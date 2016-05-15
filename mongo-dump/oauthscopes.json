@@ -1,0 +1,12 @@
+{ 
+    "_id" : ObjectId("57382dd5e05342a003543d52"), 
+    "scope" : "profile", 
+    "is_default" : false, 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("57382dd5e05342a003543d53"), 
+    "scope" : "defaultscope", 
+    "is_default" : true, 
+    "__v" : NumberInt(0)
+}

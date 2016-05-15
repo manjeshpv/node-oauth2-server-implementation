@@ -24,6 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 if (config.seedDB) { require('./components/oauth/seed'); }
+if (config.seedMongoDB) { require('./components/oauth/seed-mongo'); }
 
 /** Public Area **/
 

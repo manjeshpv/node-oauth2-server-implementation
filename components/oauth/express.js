@@ -5,14 +5,11 @@
 var oauthServer = require('oauth2-server');
 var Request = oauthServer.Request;
 var Response = oauthServer.Response;
+var config = require('../../config')
 
-var oauth = new oauthServer({
-  model: require('./models.js')
-});
+var oauth = require('./oauth')
 
 module.exports = function(app){
-
-
   app.all('/oauth/token', function(req,res,next){
     var request = new Request(req);
     var response = new Response(res);
@@ -23,8 +20,21 @@ module.exports = function(app){
         // Todo: remove unnecessary values in response
         return res.json(token)
       }).catch(function(err){
-        return res.status( 500).json(err)
+        return res.status(500).json(err)
       })
+  });
+
+  app.post('/authorise', function(req, res){
+    var request = new Request(req);
+    var response = new Response(res);
+
+    return oauth.authorize(request, response).then(function(success) {
+      //  if (req.body.allow !== 'true') return callback(null, false);
+      //  return callback(null, true, req.user);
+        res.json(success)
+    }).catch(function(err){
+      res.status(err.code || 500).json(err)
+    })
   });
 
   app.get('/authorise', function(req, res) {
@@ -41,18 +51,5 @@ module.exports = function(app){
       }).catch(function(err){
         return res.status(err.code || 500).json(err)
       });
-  });
-
-  app.post('/authorise', function(req, res){
-    var request = new Request(req);
-    var response = new Response(res);
-
-    return oauth.authorize(request, response).then(function(success) {
-      //  if (req.body.allow !== 'true') return callback(null, false);
-      //  return callback(null, true, req.user);
-        res.json(success)
-    }).catch(function(err){
-      res.status(err.code || 500).json(err)
-    })
   });
 }
