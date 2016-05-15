@@ -24,36 +24,12 @@ module.exports = function(options){
     var response = new Response(res);
 
     oauth.authenticate(request, response,options)
-      .then(function (data) {
+      .then(function (token) {
         // Request is authorized.
         // Todo: Temporary for req.user or req.session
         var bearer = req.headers.authorization.replace('Bearer','').replace('bearer','').trim()
-        if(config.db==='mongo'){
-          return db.OAuthAccessToken.findOne({ access_token: bearer})
-            .populate('User')
-            .then(function(aT){
-            req.user = aT ? aT.User : {};
-            next()
-          }).catch(function(err){
-            console.log("Error while getting session",err)
-            req.user = null
-            next()
-          })
-        }
-        return db.OAuthAccessToken.findOne({
-          include: [{
-            model:db.User,
-            attributes: ['id','username']
-          }],
-          where: { access_token: bearer}
-        }).then(function(aT){
-          req.user = aT ? aT.User.toJSON() : {};
-          next()
-        }).catch(function(err){
-          console.log("Error while getting session",err)
-          req.user = null
-          next()
-        })
+        req.user = token
+        next()
 
       })
       .catch(function (err) {
