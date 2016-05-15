@@ -1,10 +1,6 @@
 # Node OAuth2 Server Implementation
 
-References:
-https://github.com/dsquier/oauth2-server-php-mysql
-
-# [![Build Status](https://travis-ci.org/thomseddon/node-oauth2-server.png?branch=2.0)](https://travis-ci.org/thomseddon/node-oauth2-server)
-
+Supports `    "oauth2-server": "^3.0.0-b2",`
 
 ## Installation
 
@@ -101,3 +97,6 @@ The module requires a model object through which some aspects or storage, retrie
 The last parameter of all methods is a callback of which the first parameter is always used to indicate an error.
 
 Note: see https://github.com/manjeshpv/node-oauth2-server-implementation/blob/master/components/oauth/models.js for a full model example using MySQL.
+
+References:
+https://github.com/dsquier/oauth2-server-php-mysql
