@@ -26,11 +26,8 @@ module.exports = function(options){
     oauth.authenticate(request, response,options)
       .then(function (token) {
         // Request is authorized.
-        // Todo: Temporary for req.user or req.session
-        var bearer = req.headers.authorization.replace('Bearer','').replace('bearer','').trim()
         req.user = token
         next()
-
       })
       .catch(function (err) {
         // Request is not authorized.
