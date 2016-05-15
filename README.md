@@ -23,6 +23,7 @@ var express = require('express');
 var oauthServer = require('oauth2-server');
 var Request = oauthServer.Request;
 var Response = oauthServer.Response;
+var authenticate = require('./components/oauth/authenticate')
 
 var app = express();
 
