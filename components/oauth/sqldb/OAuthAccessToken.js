@@ -3,7 +3,6 @@
  */
 'use strict';
 
-const moment = require('moment');
 
 module.exports = function(sequelize, DataTypes) {
   const OAuthAccessToken = sequelize.define('OAuthAccessToken', {
