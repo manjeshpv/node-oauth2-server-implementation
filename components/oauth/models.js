@@ -36,6 +36,7 @@ function getAccessToken(bearerToken) {
 }
 
 function getClient(clientId, clientSecret) {
+
   const options = {
     where: {client_id: clientId},
     attributes: ['id', 'client_id', 'redirect_uri'],
@@ -45,7 +46,11 @@ function getClient(clientId, clientSecret) {
   return sqldb.OAuthClient
     .findOne(options)
     .then(function (client) {
-      if (!client) return new Error("client not found");
+      //console.log(client)
+      if (!client) {
+       // console.log("Rick")
+        return new Error("client not found");
+      }
       var clientWithGrants = client.toJSON()
       clientWithGrants.grants = ['authorization_code', 'password', 'refresh_token', 'client_credentials']
       // Todo: need to create another table for redirect URIs
@@ -53,6 +58,7 @@ function getClient(clientId, clientSecret) {
       delete clientWithGrants.redirect_uri
       //clientWithGrants.refreshTokenLifetime = integer optional
       //clientWithGrants.accessTokenLifetime  = integer optional
+      console.log(clientWithGrants)
       return clientWithGrants
     }).catch(function (err) {
       console.log("getClient - Err: ", err)

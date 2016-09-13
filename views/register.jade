@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  form(name="authenticate", method="post", action="/authenticate")
+    div.form-inner
+      h1= title
+      p Welcome to #{title}
+      h2 This is where we will have the default authentication redirect to login or information about registering?..
+      p by Rick Fox! :P
+      div.form-inputs
+        div.input
+          span.label First Name
+          input(type="text", name="first")
+        div.input
+          span.label Last Name
+          input(type="text", name="last")
+        div.input
+          span.label Birthday
+          span.label-subcopy 
+            a(href="/help?why-do-we-ask-for-your-birth-date") Why do we ask for this?
+          div
+            input(type="date", name="birthdate")
+        div.input
+          span.label Email
+          input(type="text", name="email")
+        div.input
+          span.label Confirm Email
+          input(type="text", name="email-confirm")
+        div.input
+          span.label Phone *optional
+          span.label-subcopy 
+            a(href="/help?why-do-we-ask-for-your-phone-number") Why do we ask for this?
+          div
+            input(type="text", name="phone")
+        div.checkbox
+          span.label(for="remember") Remember me
+          input(type="checkbox", name="remember", id="remember")
+    div.submit
+      input(type="submit", value="Submit")
+  div.subfooter-links
+    a(href="/") Login
+
+

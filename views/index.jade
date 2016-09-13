@@ -1,5 +1,33 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  script(type='text/javascript' src='http://127.0.0.1:5000/xdLocalStorage.min.js')
+ 
+  form(name="authenticate",id="authentication-form" method="post", action="/oauth/token")
+    div.form-inner
+      h1= title
+      p Welcome to #{title}
+      h2 This is where we will have the default authentication redirect to login or information about registering?..
+      p by Rick Fox! :P
+      div.form-inputs
+        div
+          input(type="hidden", name="continue", id="continue", value="#{continue}")
+        div
+          input(type="hidden", name="grant_type", id="grant_type", value="password")
+        div.input
+          span.label Email
+          input(type="text", name="username", id="username")
+        div.input
+          span.label Password
+          input(type="text", name="password", id="password")
+        div.checkbox
+          span.label(for="remember") Remember me
+          input(type="checkbox", name="remember", id="remember")
+    div.submit
+      input(type="submit", value="Submit")
+    div.subfooter-links
+    a(href="/forgot-password") Forgot Password
+    span= " | " 
+    a(href="/register") Register
+
+

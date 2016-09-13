@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  
+    div.form-inner
+      h1= title
+      p by Rick Fox! :P
+    form(name="accept-request", method="post", action="/client-registration") 
+      div
+        div.label
+          span Application Name
+        input(type="text", placeholder="Application Name", name="client_id", id="client_id")
+      div
+        div.label
+          span Application Url
+        input(type="text", placeholder="Application Url", name="app_url", id="app_url")
+      div
+        div.label
+          span Application Callback Url
+        input(type="text", placeholder="Application Name", name="app_callback", id="app_callback")
+      div.submit
+        input(type="submit", value="Submit")
+    form(name="deny-request", method="post", action="/deny-authorization") 
+      div.submit
+        input(type="submit", value="Deny")
+
+

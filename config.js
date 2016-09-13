@@ -4,9 +4,9 @@
 
 module.exports = {
   sql: {
-    database: 'oauth_demo',
+    database: 'blerpit_oauth',
     username: 'root',
-    password: '',
+    password: 'r7585ick',
     dialect: 'mysql', // PostgreSQL, MySQL, MariaDB, SQLite and MSSQL See more: http://docs.sequelizejs.com/en/latest/
     logging: true,
     timezone: '+05:30',
@@ -14,8 +14,8 @@ module.exports = {
   mongo: {
     uri: 'mongodb://username:password@domain.mongolab.com:63439/tsc'
   },
-  seedDB:false,
-  seedMongoDB:false,
-  seedDBForce:true,
-  db:'sql' // mongo,sql if you want to use any SQL change dialect above in sql config
+  seedDB: false,
+  seedMongoDB: false,
+  seedDBForce: true,
+  db: 'sql' // mongo,sql if you want to use any SQL change dialect above in sql config
 }

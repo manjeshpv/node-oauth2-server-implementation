@@ -1,0 +1,71 @@
+extends layout
+
+block content
+    script(type='text/javascript' src='http://127.0.0.1:5000/xdLocalStorage.min.js')
+    script.
+      $( document ).ready(function() {
+        var authedUser = null;
+        $("#authorize").submit(function(e){
+          e.preventDefault();
+          alert("hey")
+          var auth_header_key = "Authorization"
+          var client_key = "Bearer " + authedUser.access_token;
+          $.ajax({
+              type:"POST",
+              contentType:"application/x-www-form-urlencoded",
+              beforeSend: function (request)
+              {
+                  request.setRequestHeader(auth_header_key, client_key);
+              },
+              url: $("#authorize").attr('action'),
+              data: $("#authorize").serialize(),
+              processData: false,
+              success: function(data){
+                window.location = data.redirectUri + "?code=" + data.code
+              }
+          })
+        })
+        xdLocalStorage.init(
+          {
+              /* required */
+              iframeUrl:'http://127.0.0.1:5000/',
+              //an option function to be called right after the iframe was loaded and ready for action
+              initCallback: function () {
+                  console.log('Got iframe ready');
+                  // Retrieve
+                  xdLocalStorage.getItem('authed-users', function (data) { 
+                    if (!data || !data.value){
+                      return window.location = "/?redirect_uri="+window.location;
+                    }
+                    var dt = JSON.parse(data.value);
+                    console.log(dt);
+                    var idx = 0;
+                    var urlIdx = getParameterByName("u_act", window.location)
+                    if(urlIdx){
+                      idx = parseInt(urlIdx);
+                    }
+                    authedUser = dt[idx]
+                    $(".authedUser").html("Authenticated as: " + authedUser.user.username)
+                  });
+              }
+          }
+        );
+      });
+    div.form-inner
+      h1= title
+      p by Rick Fox! :P
+      h2 #{client_id} wants read/write access to your:
+      p.authedUser
+      ul
+        li
+          p #{scope}
+    form(name="accept-request", id="authorize", method="post", action="#{agreeUrl}") 
+      div.submit
+        input(type="hidden", value="Submit")
+      div.submit
+        input(type="submit", value="Submit")
+    form(name="deny-request", method="post", action="/deny-authorization") 
+      div.submit
+        input(type="submit", value="Deny")
+
+

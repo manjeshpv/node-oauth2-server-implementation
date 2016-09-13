@@ -13,7 +13,13 @@ module.exports = function(sequelize, DataTypes) {
       unique: true,
     },
     username: DataTypes.STRING(32),
+    firstname: DataTypes.STRING(32),
+    lastname: DataTypes.STRING(32),
     password: DataTypes.STRING(32),
+    phone: DataTypes.STRING(32),
+    lang: DataTypes.STRING(32),
+    gender: DataTypes.INTEGER(1),
+    email: DataTypes.STRING(100),
     scope: DataTypes.STRING
   }, {
     tableName: 'users', // oauth_users
