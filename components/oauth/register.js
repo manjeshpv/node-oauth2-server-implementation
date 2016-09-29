@@ -36,6 +36,7 @@ function registerUser(model) {
       lang: model.lang,
       gender: model.gender,
       email: model.email,
+      timezone: model.timezone,
       scope: model.scope
     })
     .then(function (data) {

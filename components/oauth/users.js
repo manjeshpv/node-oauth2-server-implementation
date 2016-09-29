@@ -10,7 +10,7 @@ var User = sqldb.User;
 function getUser(id) {
   return User
     .findOne({
-      attributes: ['id', 'username', 'firstname', 'lastname', 'phone', 'gender', 'lang', 'email', 'birthdate'],
+      attributes: ['id', 'username', 'firstname', 'lastname', 'phone', 'gender', 'lang', 'email', 'birthdate', 'timezone'],
       where: {id: id}
     })
     .then(function (savedRT) {

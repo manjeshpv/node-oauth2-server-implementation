@@ -22,7 +22,8 @@ module.exports = function(sequelize, DataTypes) {
     gender: DataTypes.INTEGER(1),
     email: DataTypes.STRING(100),
     birthdate: DataTypes.DATE,
-    scope: DataTypes.STRING
+    scope: DataTypes.STRING,
+    timezone: DataTypes.STRING
   }, {
     tableName: 'users', // oauth_users
     timestamps: false,
