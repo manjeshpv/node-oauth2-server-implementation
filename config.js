@@ -4,7 +4,7 @@
 
 module.exports = {
   sql: {
-    database: 'blerpit_oauth',
+    database: 'global_oauth',
     username: 'root',
     password: 'r7585ick',
     dialect: 'mysql', // PostgreSQL, MySQL, MariaDB, SQLite and MSSQL See more: http://docs.sequelizejs.com/en/latest/

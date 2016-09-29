@@ -33,6 +33,7 @@ module.exports = function(options) {
         next()
       })
       .catch(function(err) {
+        console.log(err)
         // Request is not authorized.
         // should this redirect the user to login?
         // Possibly redirect to authorize modal?

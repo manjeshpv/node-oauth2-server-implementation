@@ -8,7 +8,7 @@ var User = sqldb.User;
 
 
 function registerClient(model) {
-  return OAuthClient
+  return Client
     .create({
       name: model.name,
       client_id: model.client_id,
@@ -31,6 +31,7 @@ function registerUser(model) {
       firstname: model.firstname,
       lastname: model.lastname,
       password: model.password,
+      birthdate: model.birthdate,
       phone: model.phone,
       lang: model.lang,
       gender: model.gender,
@@ -45,6 +46,7 @@ function registerUser(model) {
     });
 }
 
-modules.export = {
-
+module.exports = {
+  registerClient : registerClient, 
+  registerUser : registerUser
 }

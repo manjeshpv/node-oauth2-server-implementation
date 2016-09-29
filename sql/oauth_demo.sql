@@ -211,7 +211,7 @@ INSERT INTO `oauth_scopes` (`id`, `scope`, `is_default`) VALUES
 (11, 'calendar', NULL), -- events and todos
 (12, 'devices', NULL),
 (13, 'blerps', NULL),
-(14, 'tags', NULL),
+(14, 'tags', NULL)
 
 -- --------------------------------------------------------
 

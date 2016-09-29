@@ -70,7 +70,7 @@ function getUser(username, password) {
   return User
     .findOne({
       where: {username: username},
-      attributes: ['id', 'username', 'password'],
+      attributes: ['id', 'username', 'password', 'email'],
     })
     .then(function (user) {
       return user.password == password ? user.toJSON() : false;
@@ -124,9 +124,10 @@ function revokeToken(token) {
 
 
 function saveToken(token, client, user) {
+  var accessToken = makeJSONWebToken(token, client, user)
   return Promise.all([
       OAuthAccessToken.create({
-        access_token: token.accessToken,
+        access_token: accessToken,
         expires: token.accessTokenExpiresAt,
         client_id: client.id,
         user_id: user.id,
@@ -146,7 +147,7 @@ function saveToken(token, client, user) {
         {
           client: client,
           user: user,
-          access_token: token.accessToken, // proxy
+          access_token: accessToken, // proxy
           refresh_token: token.refreshToken, // proxy
         },
         token
@@ -222,7 +223,7 @@ function getRefreshToken(refreshToken) {
 
   return OAuthRefreshToken
     .findOne({
-      attributes: ['client_id', 'user_id', 'expires'],
+      attributes: ['client_id', 'user_id', 'expires', 'scope'],
       where: {refresh_token: refreshToken},
       include: [OAuthClient, User]
 
@@ -242,9 +243,27 @@ function getRefreshToken(refreshToken) {
       console.log("getRefreshToken - Err: ", err)
     });
 }
+function makeJSONWebToken(token, client, user) {
+  // TODO: Make a JSON Web token from a shareable secret
 
+  var ret = token.accessToken;
+  return ret;
+}
 function validateScope(token, scope) {
-  return token.scope === scope
+  var ret = false;
+
+  var tokens = token.scope ? token.scope.split(' ') : [];
+  console.log(tokens)
+  var len = tokens.length - 1;
+  for(var x = len; x >= 0; x--) {
+    console.log(tokens[x])
+    console.log(scope)
+    if (tokens[x] === scope) {
+        x = -1;
+        ret = true;
+    }
+  }
+  return ret;
 }
 
 module.exports = {

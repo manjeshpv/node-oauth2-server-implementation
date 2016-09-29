@@ -4,6 +4,7 @@
 'use strict';
 
 module.exports = function(sequelize, DataTypes) {
+  console.log(DataTypes)
   var User = sequelize.define('User',  {
     id: {
       type: DataTypes.INTEGER(11),
@@ -20,6 +21,7 @@ module.exports = function(sequelize, DataTypes) {
     lang: DataTypes.STRING(32),
     gender: DataTypes.INTEGER(1),
     email: DataTypes.STRING(100),
+    birthdate: DataTypes.DATE,
     scope: DataTypes.STRING
   }, {
     tableName: 'users', // oauth_users

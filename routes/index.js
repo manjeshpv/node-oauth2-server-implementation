@@ -45,15 +45,7 @@ router.get('/client-registration', function(req, res, next) {
   res.render('new-client-registration', { title: 'BlerpIt Oauth 2.0  Client Registration'});
 });
 
-router.post('/client-registration', function(req, res, next) {
-  var bod = req.body;
-  var username = "blerpit";
-  var password = "blerpitsecret";
-  var appPublid = 'Basic ' + new Buffer(username + ':' + password).toString('base64');
-  var appsecret = "appsecret"
 
-  res.render('new-client-registration-success', { title: 'BlerpIt Oauth 2.0 Client Registration', client_id: bod.client_id, app_url:bod.app_url, client_private:appsecret, client_public: appPublid});
-});
 
 router.get('/forgot-password-reset/:token', function(req, res, next) {
   res.render('forgot-password-reset', { title: 'BlerpIt Oauth 2.0 Forgot Password Reset', token: req.params.token });

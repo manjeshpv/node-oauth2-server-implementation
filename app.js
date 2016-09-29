@@ -8,9 +8,24 @@ var config = require('./config.js')
 var authenticate = require('./components/oauth/authenticate')
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var clients = require('./routes/clients');
 
 var app = express();
+//CORS middleware
+// var allowCrossDomain = function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8080/');
+//     res.header('Access-Control-Allow-Methods', 'OPTIONS,GET,PUT,POST,DELETE');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type');
 
+//     next();
+// }
+// app.use(allowCrossDomain);
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'OPTIONS,GET,PUT,POST,DELETE');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, auth_header_key");
+  next();
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -34,6 +49,7 @@ require('./components/oauth')(app)
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/', clients);
 
 app.get('/secure', authenticate(), function(req,res){
   res.json({message: 'Secure data'})
@@ -48,11 +64,7 @@ app.get('/me', authenticate(), function(req,res){
   })
 });
 
-app.get('/profile', authenticate({scope:'profile'}), function(req,res){
-  res.json({
-    profile: req.user
-  })
-});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

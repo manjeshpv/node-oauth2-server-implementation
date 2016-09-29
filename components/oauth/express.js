@@ -10,10 +10,13 @@ var config = require('../../config')
 var oauth = require('./oauth')
 
 module.exports = function(app) {
+  app.options('/oauth/token',function(req,res){
+    res.status(200).send(200);
+  });
   app.all('/oauth/token', function(req, res, next) {
     var request = new Request(req);
     var response = new Response(res);
-
+    //console.log(request)
     oauth
       .token(request, response)
       .then(function(token) {
@@ -27,6 +30,7 @@ module.exports = function(app) {
         // res.send({uri:uri,access_token:access_token, token:token})
 
       }).catch(function(err) {
+        console.log(err)
         return res.status(500).json(err)
       })
   });

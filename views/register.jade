@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  form(name="authenticate", method="post", action="/authenticate")
+  form(name="register", method="post", action="/users/register")
     div.form-inner
       h1= title
       p Welcome to #{title}
@@ -15,17 +15,35 @@ block content
           span.label Last Name
           input(type="text", name="last")
         div.input
-          span.label Birthday
-          span.label-subcopy 
-            a(href="/help?why-do-we-ask-for-your-birth-date") Why do we ask for this?
-          div
-            input(type="date", name="birthdate")
+          span.label Display Name
+          input(type="text", name="username")
         div.input
           span.label Email
           input(type="text", name="email")
         div.input
           span.label Confirm Email
           input(type="text", name="email-confirm")
+        div.input
+          span.label Password
+          input(type="text", name="password")
+        div.input
+          span.label Confirm Password
+          input(type="text", name="password-confirm")
+        div.input
+          span.label Birthday
+          span.label-subcopy 
+            a(href="/help?why-do-we-ask-for-your-birth-date") Why do we ask for this?
+          div
+            input(type="date", name="birthdate")
+        div.input
+          span.label Language
+          input(type="text", name="lang")
+        div.input
+          span.label Gender
+          input(type="text", name="gender")
+        div.input
+          span.label Preffered Timezone
+          input(type="text", name="timezone")
         div.input
           span.label Phone *optional
           span.label-subcopy 
