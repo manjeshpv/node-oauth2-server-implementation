@@ -55,7 +55,7 @@ function getClient(clientId, clientSecret) {
         return new Error("client not found");
       }
       var clientWithGrants = client.toJSON()
-      clientWithGrants.grants = ['authorization_code', 'password', 'refresh_token', 'client_credentials']
+      clientWithGrants.grants = ['authorization_code', 'password', 'refresh_token', 'client_credentials', 'ldap']
       // Todo: need to create another table for redirect URIs
       clientWithGrants.redirectUris = [clientWithGrants.redirect_uri]
       delete clientWithGrants.redirect_uri
@@ -135,6 +135,7 @@ function revokeToken(token) {
 
 
 function saveToken(token, client, user) {
+  console.log('save')
   var accessToken = makeJSONWebToken(token, client, user)
   return Promise.all([
       OAuthAccessToken.create({
@@ -264,9 +265,9 @@ function makeJSONWebToken(token, client, user) {
 }
 function validateScope(token, scope) {
   var ret = false;
-
   var tokens = token.scope ? token.scope.split(' ') : [];
   console.log(tokens)
+  console.log(scope)
   var len = tokens.length - 1;
   for(var x = len; x >= 0; x--) {
     console.log(tokens[x])

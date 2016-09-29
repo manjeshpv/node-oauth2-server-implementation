@@ -9,6 +9,7 @@ var authenticate = require('./components/oauth/authenticate')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var clients = require('./routes/clients');
+var ldap = require('./routes/ldap');
 
 var app = express();
 //CORS middleware
@@ -50,6 +51,7 @@ require('./components/oauth')(app)
 app.use('/', routes);
 app.use('/users', users);
 app.use('/', clients);
+app.use('/ldap', ldap);
 
 app.get('/secure', authenticate(), function(req,res){
   res.json({message: 'Secure data'})
