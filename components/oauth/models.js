@@ -69,9 +69,17 @@ function getClient(clientId, clientSecret) {
 function getUser(username, password) {
   return User
     .findOne({
-      where: {username: username},
-      attributes: ['id', 'username', 'password', 'email'],
+      where: {
+          $or: [
+          { username: username },
+          { email: username }
+        ]
+      }
     })
+    // .findOne({
+    //   where: {username: username},
+    //   attributes: ['id', 'username', 'password'],
+    // })
     .then(function (user) {
       return user.password == password ? user.toJSON() : false;
     })
