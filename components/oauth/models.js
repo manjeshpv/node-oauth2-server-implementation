@@ -9,6 +9,9 @@ var OAuthClient = sqldb.OAuthClient;
 var OAuthAccessToken = sqldb.OAuthAccessToken;
 var OAuthAuthorizationCode = sqldb.OAuthAuthorizationCode;
 var OAuthRefreshToken = sqldb.OAuthRefreshToken;
+var jwt = require('jsonwebtoken');
+var path = require('path');
+var fs = require('fs');
 
 function getAccessToken(bearerToken) {
   return OAuthAccessToken
@@ -255,7 +258,9 @@ function makeJSONWebToken(token, client, user) {
   // TODO: Make a JSON Web token from a shareable secret
 
   var ret = token.accessToken;
-  return ret;
+  var cert = fs.readFileSync( path.join(__dirname, 'private.key'), 'utf8');  // get private key
+  var token = jwt.sign({ foo: 'bar' }, cert);
+  return token;
 }
 function validateScope(token, scope) {
   var ret = false;

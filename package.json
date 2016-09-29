@@ -12,6 +12,7 @@
     "express": "~4.13.1",
     "express-cors": "0.0.3",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^7.1.9",
     "lodash": "^4.16.2",
     "moment": "^2.15.1",
     "mongoose": "^4.4.17",
