@@ -4,7 +4,7 @@
 'use strict';
 
 module.exports = function(sequelize, DataTypes) {
-  console.log(DataTypes)
+  // console.log(DataTypes)
   var User = sequelize.define('User',  {
     id: {
       type: DataTypes.INTEGER(11),
@@ -23,7 +23,8 @@ module.exports = function(sequelize, DataTypes) {
     email: DataTypes.STRING(100),
     birthdate: DataTypes.DATE,
     scope: DataTypes.STRING,
-    timezone: DataTypes.STRING
+    timezone: DataTypes.STRING,
+    image_url: DataTypes.STRING
   }, {
     tableName: 'users', // oauth_users
     timestamps: false,
@@ -31,7 +32,8 @@ module.exports = function(sequelize, DataTypes) {
 
     classMethods: {
       associate: function associate(models) {
-        //User.hasMany(models.OAuthClient);
+        User.hasMany(models.OAuthAccessToken);
+        User.hasMany(models.Session);
       },
     },
   });

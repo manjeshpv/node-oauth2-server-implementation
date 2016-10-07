@@ -260,7 +260,7 @@ function makeJSONWebToken(token, client, user) {
 
   var ret = token.accessToken;
   var cert = fs.readFileSync( path.join(__dirname, 'private.key'), 'utf8');  // get private key
-  var token = jwt.sign({ foo: 'bar' }, cert);
+  var token = jwt.sign({ id: user.id }, cert);
   return token;
 }
 function validateScope(token, scope) {
@@ -270,8 +270,8 @@ function validateScope(token, scope) {
   console.log(scope)
   var len = tokens.length - 1;
   for(var x = len; x >= 0; x--) {
-    console.log(tokens[x])
-    console.log(scope)
+    // console.log(tokens[x])
+    // console.log(scope)
     if (tokens[x] === scope) {
         x = -1;
         ret = true;

@@ -1,8 +1,42 @@
+* { box-sizing: border-box; }
 body {
-  padding: 50px;
+  padding: 5px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #333;
 }
 
 a {
   color: #00B7FF;
 }
+
+.error-msg { color: red; font-weight: bold; }
+
+#authentication-form { width: 400px; max-width: 100%; margin: 0 auto; }
+
+form {
+	.input { 
+		.label { display: block; }
+	 }
+}
+.back-mask { background: #1b75bb; position: fixed; z-index: 1; top: 0; left: 0; right: 0; height: 50px; }
+.back-mask:after { content: ''; position: absolute; top: 50px; left: 0; width: 100%; height: 100%; background: #1b75bb;
+	-webkit-transform-origin: 100% 0;
+	-ms-transform-origin: 100% 0;
+	transform-origin: 100% 0;
+	-webkit-transform: skew(268deg);
+	-ms-transform: skew(268deg);
+	transform: skew(268deg);
+	z-index: -1;
+ }
+.form-inner { position: relative; overflow: hidden; padding: 0 16px; border: 2px solid #999; background: #fefefe;  z-index: 100; }
+.form-inputs .input { margin: 0 0 16px; }
+.form-inputs input[type="text"] { width: 100%; padding: 8px 16px; }
+.form-inputs .input .label { display: block; }
+.form-inputs .checkbox { padding: 8px 0; } 
+
+.submit { margin-bottom: 16px; }
+.submit button { width: 100%;  padding:16px; display: block;  background: #999; color: #fefefe; border: 0; }
+.submit button:hover { cursor: pointer; }
+
+.subfooter-links a { width: 50%; display: block; float: left; text-align: center; }
+.subfooter-links a:eq(1) { border-left: 1px solid #999; }

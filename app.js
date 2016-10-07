@@ -10,20 +10,22 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var clients = require('./routes/clients');
 var ldap = require('./routes/ldap');
-
+var _ = require("lodash");
 var app = express();
-//CORS middleware
-// var allowCrossDomain = function(req, res, next) {
-//     res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8080/');
-//     res.header('Access-Control-Allow-Methods', 'OPTIONS,GET,PUT,POST,DELETE');
-//     res.header('Access-Control-Allow-Headers', 'Content-Type');
 
-//     next();
-// }
-// app.use(allowCrossDomain);
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  var allowedOrigins = ["http://127.0.0.1:8080","http://127.0.0.1:5000", "http://192.168.1.91:5000"];
+  var origin = "http://127.0.0.1:3000";
+   //console.log(req.headers.origin)
+   //console.log(allowedOrigins)
+  if(_.indexOf(allowedOrigins, req.headers.origin) > -1) {
+    //console.log('allowed')
+    origin = req.headers.origin
+  }
+ 
+  res.header("Access-Control-Allow-Origin", origin);
   res.header('Access-Control-Allow-Methods', 'OPTIONS,GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Credentials', 'true')
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });

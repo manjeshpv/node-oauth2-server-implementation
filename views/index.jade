@@ -1,16 +1,79 @@
 extends layout
 
 block content
-  script(type='text/javascript' src='http://127.0.0.1:5000/xdLocalStorage.min.js')
- 
+  script.
+    $( document ).ready(function() {
+      $("#authentication-form .submit button").click(function(e){
+      e.preventDefault();
+      var auth_header_key = "Authorization";
+      var client_key = "Basic WUxBaC16UlVMLWdXVjg6TFhodzVaSkV3Y0FtUVZ3SHA1MGxqMkhBMkk1Rkg2R09uQ1M="
+         $('.error-msg').html("");
+        $.ajax({
+          type:"POST",
+          contentType:"application/x-www-form-urlencoded",
+          beforeSend: function (request)
+          {
+              request.setRequestHeader(auth_header_key, client_key);
+          },
+          url: "/oauth/token",
+          data: $("#authentication-form").serialize(),
+          processData: false,
+          success: function(data){
+            //window.location = data.uri+"?code="+data.access_token+"&return_uri="+data.uri
+            console.log(data)
+            var return_uri = getParameterByName('redirect_uri', window.location);
+            if (return_uri) {
+              window.location = return_uri + (return_uri.indexOf("?") > -1 ? "" : "?") + 'u_id=' + data.token.user.id;
+            } else {
+              window.location = "/users/" + data.token.user.id + "/account"
+            }
+          },
+          error: function() {
+            $('.error-msg').html("Authentication failed.  Please try again.")
+          }
+        });
+      })
+
+    });
+    function getParameterByName(name, url) {
+          if (!url) url = window.location.href;
+          name = name.replace(/[\[\]]/g, "\\$&");
+          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+              results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    $(document).ready(function(){
+      //Load the session Users
+      $.ajax({
+        type:"GET",
+        url: "/session-users",
+        success: function(data){
+          console.log(data)
+          var return_uri = getParameterByName('redirect_uri', window.location);
+
+          // ensure there are authenticated users
+          if (data && data.users && data.users.length) {
+            var out = "<p><strong>Authenticated Users:</strong></p>";
+            for(var x = 0; x < data.users.length; x++){
+              var elm = data.users[x];
+              var url = return_uri ? (return_uri + (return_uri.indexOf("?") > -1 ? "" : "?") + 'u_id=' + elm.User.id) : "/users/' + elm.User.id + '/account";
+              out+= '<div><a href="' + url + '"><div><h3>'+elm.User.username+'</h3></div><div><small>'+elm.User.email+'</small></div></a></div>';
+            }
+            $('.authed-users').html(out);
+          } 
+        }
+      });
+    });
+  div.back-mask
   form(name="authenticate",id="authentication-form" method="post", action="/oauth/token")
     div.form-inner
       h1= title
-      p Welcome to #{title}
-      h2 This is where we will have the default authentication redirect to login or information about registering?..
+      div.authed-users
+      h3 Enter your credentials below to authenticate
       div.form-inputs
-        div
-          input(type="hidden", name="continue", id="continue", value="#{continue}")
         div
           input(type="hidden", name="grant_type", id="grant_type", value="password")
         div.input
@@ -22,11 +85,11 @@ block content
         div.checkbox
           span.label(for="remember") Remember me
           input(type="checkbox", name="remember", id="remember")
+        p.error-msg
     div.submit
-      input(type="submit", value="Submit")
+      button SUBMIT
     div.subfooter-links
-    a(href="/forgot-password") Forgot Password
-    span= " | " 
-    a(href="/register") Register
+      a(href="/forgot-password") Forgot Password
+      a(href="/register") Register
 
 

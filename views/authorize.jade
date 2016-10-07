@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    script(type='text/javascript' src='http://127.0.0.1:5000/xdLocalStorage.min.js')
+    script(type='text/javascript' src='https://storage.notoutofthebox.com/xdLocalStorage.min.js')
     script.
       $( document ).ready(function() {
         var authedUser = null;
@@ -28,7 +28,7 @@ block content
         xdLocalStorage.init(
           {
               /* required */
-              iframeUrl:'http://127.0.0.1:5000/',
+              iframeUrl:'https://storage.notoutofthebox.com/',
               //an option function to be called right after the iframe was loaded and ready for action
               initCallback: function () {
                   console.log('Got iframe ready');

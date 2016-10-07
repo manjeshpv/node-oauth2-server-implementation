@@ -21,6 +21,7 @@ db.OAuthClient = db.sequelize.import('./OAuthClient');
 db.OAuthRefreshToken = db.sequelize.import('./OAuthRefreshToken');
 db.OAuthScope = db.sequelize.import('./OAuthScope');
 db.User = db.sequelize.import('./User');
+db.Session = db.sequelize.import('./Session');
 db.Thing = db.sequelize.import('./Thing');
 
 Object.keys(db).forEach(function(modelName) {

@@ -15,7 +15,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     access_token:DataTypes.STRING(256),
     expires:DataTypes.DATE,
-    scope: DataTypes.STRING
+    scope: DataTypes.STRING,
+    user_id: DataTypes.INTEGER(11),
   }, {
     tableName: 'oauth_access_tokens',
     timestamps: false,

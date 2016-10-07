@@ -1,22 +1,47 @@
 extends layout
 
 block content
+  script.
+    $(document).ready(function() {
+      // Load the session Users
+      $.ajax({
+        type:"GET",
+        url: "/session-users",
+        success: function(data){
+          console.log(data)
+          // ensure there are authenticated users
+          if (data && data.users && data.users.length) {
+            var out = "";
+            for(var x = 0; x < data.users.length; x++){
+              var elm = data.users[x];
+              out+= '<div><a href="/users/' + elm.User.id + '/account"><div><h3>'+elm.User.username+'</h3></div><div><small>'+elm.User.email+'</small></div></a></div>';
+            }
+            $('.authed-users').html(out);
+          } else {
+            alert('no users')
+            //window.location = "/?redirect_uri=" + window.location;
+          }
+        }
+      });
+    });
   
-    div.form-inner
-      h1= title
-      ul
-        li
-          p Personal Info
-        li
-          p See all authed devices
-        li
-          p Show connected apps using Oauth
-        li
-          p Account preferences
-        li
-          p Delete Account
-        li
-          p Reset Password
-        li
-          p Recovery Options
+  div.form-inner
+    h1= title
+    div.authed-users
+    p TODO: Replace with angular or react app for sub account pages below
+    ul
+      li
+        p Personal Info
+      li
+        p See all authed devices
+      li
+        p Show connected apps using Oauth
+      li
+        p Account preferences
+      li
+        p Delete Account
+      li
+        p Reset Password
+      li
+        p Recovery Options
 

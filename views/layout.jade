@@ -5,66 +5,6 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(type='text/javascript' src='https://code.jquery.com/jquery-3.1.0.min.js')
     
-    script.
-      $( document ).ready(function() {
-        $("#authentication-form").submit(function(e){
-        e.preventDefault();
-        var auth_header_key = "Authorization";
-        var client_key = "Basic YmxlcnBpdDpibGVycGl0c2VjcmV0"
-        
-          $.ajax({
-            type:"POST",
-            contentType:"application/x-www-form-urlencoded",
-            beforeSend: function (request)
-            {
-                request.setRequestHeader(auth_header_key, client_key);
-            },
-            url: "/oauth/token",
-            data: $("#authentication-form").serialize(),
-            processData: false,
-            success: function(data){
-              //window.location = data.uri+"?code="+data.access_token+"&return_uri="+data.uri
-              console.log(data)
-              // Retrieve
-              xdLocalStorage.init({
-                  /* required */
-                  iframeUrl:'http://127.0.0.1:5000/',
-                  //an option function to be called right after the iframe was loaded and ready for action
-                  initCallback: function () {
-                  xdLocalStorage.removeItem("authed-users")
-                      console.log('Storage iframe ready');
-                      xdLocalStorage.getItem('authed-users', function (dt) {
-                      var nextDt = []
-                        if (dt && dt.value > ""){
-                          nextDt = JSON.parse(dt.value)
-                        }
-                        console.log(nextDt)
-                        nextDt.push(data.token);
-                        xdLocalStorage.setItem('authed-users',JSON.stringify(nextDt));
-                        var nextUrl = getParameterByName("redirect_uri",window.location);
-                        if(!nextUrl) {
-                          nextUrl = "/my-account"
-                          if(nextDt.length > 1){
-                          nextUrl += "?u_act="+nextDt.length;
-                          }
-                        }
-                        window.location = nextUrl;
-                      });
-                  }
-              });
-            }
-          });
-        })
-
-      });
-      function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[\[\]]/g, "\\$&");
-            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, " "));
-      }
+   
   body
     block content

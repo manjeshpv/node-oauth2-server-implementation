@@ -5,9 +5,10 @@
 var oauthServer = require('oauth2-server');
 var Request = oauthServer.Request;
 var Response = oauthServer.Response;
-var config = require('../../config')
+var config = require('../../config');
 
 var oauth = require('./oauth')
+var session = require('./session')
 
 module.exports = function(app) {
   app.options('/oauth/token',function(req,res){
@@ -21,7 +22,41 @@ module.exports = function(app) {
       .token(request, response)
       .then(function(token) {
         // Todo: remove unnecessary values in response
-        return res.json({token:token,redirect_uri:request.body.redirect_uri })
+        console.log('Check/Set cookies');
+        if (request.body.grant_type === 'password') {
+          var cookie = req.cookies[config.session.cookieName];
+          if (cookie === undefined)
+          {
+            // no: set a new cookie
+            console.log('use JWT with session inside it.. to help prevent attacks');
+            var randomNumber=Math.random().toString();
+            randomNumber=randomNumber.substring(2,randomNumber.length);
+            res.cookie(config.session.cookieName,randomNumber, { maxAge: 900000, httpOnly: true, expires: 0, domain: config.session.cookieDomain });
+            cookie = randomNumber;
+          } 
+          else
+          {
+            // yes, cookie was already present 
+            res.cookie(config.session.cookieName,cookie, { maxAge: 900000, httpOnly: true, expires: 0, domain: config.session.cookieDomain });
+            // console.log('cookie exists', cookie);
+          } 
+        }
+         
+        session.addSessionUser(cookie, token.user.id).then(function(data){
+          console.log("#####################")
+          console.log(data);
+          console.log(data[0]);
+           console.log(data[0].id);
+          console.log("#####################")
+          session.updateUserSessionToken(data[0].id,token.access_token).then(function(ret){
+            console.log("#####################")
+            console.log(ret)
+            console.log("#####################")
+
+            return res.json({token:token,redirect_uri:request.body.redirect_uri, cookie })
+          })
+        })
+        
         // var uri = token.client.redirectUris[0];
         // if(!uri) {
         //   uri="/my-account" // Default redirect url
@@ -71,4 +106,5 @@ module.exports = function(app) {
     //     return res.status(err.code || 500).json(err)
     //   });
   //});
+  
 }

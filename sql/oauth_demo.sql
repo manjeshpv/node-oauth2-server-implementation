@@ -27,13 +27,15 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `oauth_access_tokens` (
-  `id` int(14) NOT NULL,
-  `access_token` varchar(256) DEFAULT NULL,
+  `id` int(14) NOT NULL AUTO_INCREMENT,
+  `access_token` varchar(5000) DEFAULT NULL,
   `expires` datetime DEFAULT NULL,
   `scope` varchar(255) DEFAULT NULL,
   `client_id` int(14) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 --
 -- Dumping data for table `oauth_access_tokens`
@@ -84,13 +86,14 @@ CREATE TABLE `oauth_access_tokens` (
 --
 
 CREATE TABLE `oauth_authorization_codes` (
-  `id` int(14) NOT NULL,
-  `authorization_code` varchar(256) DEFAULT NULL,
+  `id` int(14) NOT NULL AUTO_INCREMENT,
+  `authorization_code` varchar(5000) DEFAULT NULL,
   `expires` datetime DEFAULT NULL,
   `redirect_uri` varchar(2000) DEFAULT NULL,
-  `scope` varchar(255) DEFAULT NULL,
+  `scope` varchar(5000) DEFAULT NULL,
   `client_id` int(14) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -121,14 +124,15 @@ CREATE TABLE `oauth_authorization_codes` (
 --
 
 CREATE TABLE `oauth_clients` (
-  `id` int(14) NOT NULL,
+  `id` int(14) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `client_id` varchar(80) DEFAULT NULL,
   `client_secret` varchar(80) DEFAULT NULL,
   `redirect_uri` varchar(2000) DEFAULT NULL,
   `grant_types` varchar(80) DEFAULT NULL,
-  `scope` varchar(255) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `scope` varchar(5000) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -145,12 +149,13 @@ CREATE TABLE `oauth_clients` (
 --
 
 CREATE TABLE `oauth_refresh_tokens` (
-  `id` int(14) NOT NULL,
-  `refresh_token` varchar(256) DEFAULT NULL,
+  `id` int(14) NOT NULL AUTO_INCREMENT,
+  `refresh_token` varchar(5000) DEFAULT NULL,
   `expires` datetime DEFAULT NULL,
-  `scope` varchar(255) DEFAULT NULL,
+  `scope` varchar(5000) DEFAULT NULL,
   `client_id` int(14) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -188,9 +193,10 @@ CREATE TABLE `oauth_refresh_tokens` (
 --
 
 CREATE TABLE `oauth_scopes` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `scope` varchar(80) DEFAULT NULL,
-  `is_default` tinyint(1) DEFAULT NULL
+  `is_default` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -211,7 +217,7 @@ INSERT INTO `oauth_scopes` (`id`, `scope`, `is_default`) VALUES
 (11, 'calendar', NULL), -- events and todos
 (12, 'devices', NULL),
 (13, 'blerps', NULL),
-(14, 'tags', NULL)
+(14, 'tags', NULL);
 
 -- --------------------------------------------------------
 
@@ -220,7 +226,7 @@ INSERT INTO `oauth_scopes` (`id`, `scope`, `is_default`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(32) DEFAULT NULL,
   `firstname` varchar(32) DEFAULT NULL,
   `lastname` varchar(32) DEFAULT NULL,
@@ -230,7 +236,21 @@ CREATE TABLE `users` (
   `email` varchar(100) DEFAULT NULL,
   `birthdate` timestamp NULL,
   `password` varchar(32) DEFAULT NULL,
-  `scope` varchar(255) DEFAULT NULL
+  `timezone` varchar(45) DEFAULT NULL,
+  `scope` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+CREATE TABLE `oauth_sessions` (
+  `id` int(14) NOT NULL AUTO_INCREMENT,
+  `session_id` varchar(5000) DEFAULT NULL,
+  `user_id` INT(11) DEFAULT NULL,
+  `is_deleted` varchar(255) DEFAULT 0,
+  `token_id` INT(14) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -299,6 +319,14 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `id` (`id`),
   ADD UNIQUE KEY `users_id_unique` (`id`);
 
+
+ALTER TABLE `oauth_sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD UNIQUE KEY `oauth_sessions_id_unique` (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -327,6 +355,9 @@ ALTER TABLE `oauth_refresh_tokens`
 -- AUTO_INCREMENT for table `oauth_scopes`
 --
 ALTER TABLE `oauth_scopes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `oauth_sessions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users`
@@ -367,3 +398,10 @@ ALTER TABLE `oauth_refresh_tokens`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+ALTER TABLE `oauth_sessions`
+  ADD CONSTRAINT `oauth_sessions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+
+INSERT INTO `oauth_clients` (`name`, `client_id`, `client_secret`, `redirect_uri`, `grant_types`, `scope`)
+VALUES ('Main App', 'JUGs-IAKy-r0A1', '4edOyqWktOvkKOS2Mp2h3vFIDI4fRK322XY', 'https://auth.notoutofthebox.com/callback', 'password ldap','owner')
