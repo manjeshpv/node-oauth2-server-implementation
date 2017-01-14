@@ -3,15 +3,15 @@
  */
 
 var oauthServer = require('oauth2-server');
+var config = require('config');
 var Request = oauthServer.Request;
 var Response = oauthServer.Response;
-var config = require('../../config');
-var db = config.db==='mongo' ? require('./mongodb') : require('./sqldb');
+var db = config.get('db') === 'mongo' ? require('./mongodb') : require('./sqldb');
 
-var oauth = require('./oauth')
+var oauth = require('./oauth');
 
 module.exports = function(app){
-  app.all('/oauth/token', function(req,res,next){
+  app.all('/oauth/token', function(req, res, next){
     var request = new Request(req);
     var response = new Response(res);
 
@@ -51,6 +51,6 @@ module.exports = function(app){
         return res.json(model);
       }).catch(function(err){
         return res.status(err.code || 500).json(err)
-      });
+      })
   });
-}
+};

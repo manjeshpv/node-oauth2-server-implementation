@@ -3,17 +3,17 @@
  */
 
 var oauthServer = require('oauth2-server');
+var config = require('config');
+var db = require('./sqldb');
 var Request = oauthServer.Request;
 var Response = oauthServer.Response;
-var db = require('./sqldb')
-var config = require('../../config');
-if(config.db === 'mongo'){
-  db = require('./mongodb')
+if(config.get('db') === 'mongo'){
+  db = require('./mongodb');
 }
-var oauth = require('./oauth')
+var oauth = require('./oauth');
 
 module.exports = function(options){
-  var options = options || {};
+  options = options || {};
   return function(req, res, next) {
     var request = new Request({
       headers: {authorization: req.headers.authorization},
@@ -22,16 +22,15 @@ module.exports = function(options){
       body: req.body
     });
     var response = new Response(res);
-
-    oauth.authenticate(request, response,options)
+    oauth.authenticate(request, response, options)
       .then(function (token) {
         // Request is authorized.
-        req.user = token
-        next()
+        req.user = token;
+        next();
       })
       .catch(function (err) {
         // Request is not authorized.
-        res.status(err.code || 500).json(err)
+        res.status(err.code || 500).json(err);
       });
   }
-}
+};

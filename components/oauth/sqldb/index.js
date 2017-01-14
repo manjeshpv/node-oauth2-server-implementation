@@ -3,15 +3,15 @@
  */
 
 /** https://github.com/dsquier/oauth2-server-php-mysql **/
-var config = require('./../../../config')
+var config = require('config');
 var Sequelize = require('sequelize');
 
 var db = {
   sequelize: new Sequelize(
-    config.sql.database,
-    config.sql.username,
-    config.sql.password,
-    config.sql
+    config.get('sql.database'),
+    config.get('sql.username'),
+    config.get('sql.password'),
+    config.get('sql')
   )
 };
 

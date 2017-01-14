@@ -1,0 +1,18 @@
+{
+  "sql": {
+    "database": "cas",
+    "username": "dbuser",
+    "password": "dbuser123",
+    "dialect": "mysql",
+    "logging": false,
+    "timezone": "+08:00",
+    "host": "114.215.40.81"
+  },
+  "mongo": {
+    "uri": "mongodb://username:password@domain.mongolab.com:63439/tsc"
+  },
+  "seedDB": false,
+  "seedMongoDB": false,
+  "seedDBForce": true,
+  "db": "sql"
+}

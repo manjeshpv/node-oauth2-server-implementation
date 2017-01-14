@@ -4,8 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var config = require('./config.js')
-var authenticate = require('./components/oauth/authenticate')
+var config = require('config');
+var authenticate = require('./components/oauth/authenticate');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -23,12 +23,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-if (config.seedDB) { require('./components/oauth/seed'); }
-if (config.seedMongoDB) { require('./components/oauth/seed-mongo'); }
+if (config.get('seedDB')) { require('./components/oauth/seed'); }
+if (config.get('seedMongoDB')) { require('./components/oauth/seed-mongo'); }
 
 /** Public Area **/
 
-require('./components/oauth')(app)
+require('./components/oauth')(app);
 
 /** Control Private through OAuth **/
 
