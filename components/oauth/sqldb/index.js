@@ -1,18 +1,15 @@
-/**
- * Created by Manjesh on 14-05-2016.
- */
+'use strict';
 
-/** https://github.com/dsquier/oauth2-server-php-mysql **/
-var config = require('config');
-var Sequelize = require('sequelize');
+let config = require('config');
+let Sequelize = require('sequelize');
 
-var db = {
+let db = {
   sequelize: new Sequelize(
     config.get('sql.database'),
     config.get('sql.username'),
     config.get('sql.password'),
     config.get('sql')
-  )
+  ),
 };
 
 db.OAuthAccessToken = db.sequelize.import('./OAuthAccessToken');
@@ -23,7 +20,7 @@ db.OAuthScope = db.sequelize.import('./OAuthScope');
 db.User = db.sequelize.import('./User');
 db.Thing = db.sequelize.import('./Thing');
 
-Object.keys(db).forEach(function(modelName) {
+Object.keys(db).forEach(function (modelName) {
   if ('associate' in db[modelName]) {
     db[modelName].associate(db);
   }
