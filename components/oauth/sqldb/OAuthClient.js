@@ -26,10 +26,10 @@ module.exports = function AppModel(sequelize, DataTypes) {
     classMethods: {
       associate: function associate(models) {
         OAuthClient.belongsTo(models.User, {
-          foreignKey: 'user_id',
+          foreignKey: 'user_id'
         });
-      },
-    },
+      }
+    }
   });
 
   return OAuthClient;

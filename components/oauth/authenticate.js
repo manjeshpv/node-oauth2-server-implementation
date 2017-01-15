@@ -1,27 +1,26 @@
-/**
- * Created by Manjesh on 14-05-2016.
- */
+'use strict';
 
-var oauthServer = require('oauth2-server');
-var config = require('config');
-var db = require('./sqldb');
-var Request = oauthServer.Request;
-var Response = oauthServer.Response;
-if(config.get('db') === 'mongo'){
-  db = require('./mongodb');
-}
-var oauth = require('./oauth');
+let oauthServer = require('oauth2-server');
+// let config = require('config');
+// let db = require('./sqldb');
+// if (config.get('db') === 'mongo') {
+//   db = require('./mongodb');
+// }
+let Request = oauthServer.Request;
+let Response = oauthServer.Response;
 
-module.exports = function(options){
+let oauth = require('./oauth');
+
+module.exports = function (options) {
   options = options || {};
-  return function(req, res, next) {
-    var request = new Request({
+  return function (req, res, next) {
+    let request = new Request({
       headers: {authorization: req.headers.authorization},
       method: req.method,
       query: req.query,
-      body: req.body
+      body: req.body,
     });
-    var response = new Response(res);
+    let response = new Response(res);
     oauth.authenticate(request, response, options)
       .then(function (token) {
         // Request is authorized.
@@ -32,5 +31,5 @@ module.exports = function(options){
         // Request is not authorized.
         res.status(err.code || 500).json(err);
       });
-  }
+  };
 };

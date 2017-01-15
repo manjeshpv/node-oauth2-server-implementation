@@ -14,5 +14,7 @@
   "seedDB": false,
   "seedMongoDB": false,
   "seedDBForce": true,
-  "db": "sql"
+  "db": "sql",
+  "accessTokenLifetime": 21600,
+  "refreshTokenLifetime": 604800
 }
