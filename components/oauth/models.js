@@ -233,7 +233,7 @@ function verifyScope (token) {
   let user = token.user;
   let client = token.client;
   let scope = token.scope;
-  return (user.scope === scope && client.scope === scope && scope != null) ? scope : false;
+  return (client.scope === scope && scope != null) ? scope : false;
 }
 
 module.exports = {
