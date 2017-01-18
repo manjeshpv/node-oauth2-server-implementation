@@ -33,7 +33,7 @@ CREATE TABLE `oauth_access_tokens` (
   `scope` varchar(255) DEFAULT NULL,
   `client_id` int(14) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `oauth_access_tokens`
@@ -91,7 +91,7 @@ CREATE TABLE `oauth_authorization_codes` (
   `scope` varchar(255) DEFAULT NULL,
   `client_id` int(14) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `oauth_authorization_codes`
@@ -129,7 +129,7 @@ CREATE TABLE `oauth_clients` (
   `grant_types` varchar(80) DEFAULT NULL,
   `scope` varchar(255) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `oauth_clients`
@@ -151,7 +151,7 @@ CREATE TABLE `oauth_refresh_tokens` (
   `scope` varchar(255) DEFAULT NULL,
   `client_id` int(14) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `oauth_refresh_tokens`
@@ -191,7 +191,7 @@ CREATE TABLE `oauth_scopes` (
   `id` int(11) NOT NULL,
   `scope` varchar(80) DEFAULT NULL,
   `is_default` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `oauth_scopes`
@@ -210,19 +210,30 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(32) DEFAULT NULL,
   `password` varchar(32) DEFAULT NULL,
+  `crop_id` int(11) DEFAULT 0,
   `scope` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `scope`) VALUES
-(1, 'admin', 'admin', 'profile');
+INSERT INTO `users` (`id`, `username`, `password`, `crop_id`, `scope`) VALUES
+(1, 'admin', 'admin', '1', 'profile');
 
 --
 -- Indexes for dumped tables
 --
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `crop`
+--
+
+CREATE TABLE `crops` (
+  `id` int(11) NOT NULL,
+  `crop_name` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB;
 
 --
 -- Indexes for table `oauth_access_tokens`
@@ -277,7 +288,15 @@ ALTER TABLE `oauth_scopes`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id` (`id`),
-  ADD UNIQUE KEY `users_id_unique` (`id`);
+  ADD UNIQUE KEY `users_id_unique` (`id`),
+  ADD KEY `crop_id` (`crop_id`);
+
+--
+-- Indexs for table `crops`
+--
+ALTER TABLE `crops`
+  ADD PRIMARY KEY (`id`);
+
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -313,6 +332,11 @@ ALTER TABLE `oauth_scopes`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `crops`
+--
+ALTER TABLE `crops`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- Constraints for dumped tables
 --

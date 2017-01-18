@@ -17,7 +17,7 @@ function getAccessToken (bearerToken) {
       include: [
         {
           model: User,
-          attributes: ['id', 'username'],
+          attributes: ['id', 'username', 'cropId'],
         },
         OAuthClient,
       ],
@@ -60,12 +60,18 @@ function getClient (clientId, clientSecret) {
 }
 
 function getUser (username, password) {
+  const cropSplit = '#';
+  let userName = username.split(cropSplit)[0];
+  let cropId = username.split(cropSplit)[1];
+
   return User
     .findOne({
-      where: {username: username},
+      where: {username: userName, cropId: cropId},
       attributes: ['id', 'username', 'password'],
     })
     .then(function (user) {
+      console.log('user info', user);
+
       return user.password.toString() === password.toString() ? user.toJSON() : false;
     })
     .catch(function (err) {
@@ -79,7 +85,7 @@ function revokeAuthorizationCode (code) {
       authorization_code: code.code,
     },
   }).then(function (rCode) {
-    //if(rCode) rCode.destroy();
+    if(rCode) rCode.destroy();
     /***
      * As per the discussion we need set older date
      * revokeToken will expected return a boolean in future version

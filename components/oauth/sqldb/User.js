@@ -11,6 +11,10 @@ module.exports = function (sequelize, DataTypes) {
     },
     username: DataTypes.STRING(32),
     password: DataTypes.STRING(32),
+    cropId: {
+      type: DataTypes.INTEGER(11),
+      field: 'crop_id',
+    },
     scope: DataTypes.STRING,
   }, {
     tableName: 'users', // oauth_users

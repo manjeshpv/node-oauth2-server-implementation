@@ -1,12 +1,19 @@
 {
   "sql": {
     "database": "cas",
-    "username": "dbuser",
-    "password": "dbuser123",
+    "username": "root",
+    "password": "root",
     "dialect": "mysql",
     "logging": false,
     "timezone": "+08:00",
-    "host": "114.215.40.81"
+    "host": "103.36.173.13",
+    "port": 46021
+  },
+  "redis": {
+    "port": 6380,
+    "host": "118.178.24.94",
+    "password": "airclass@188.178",
+    "database": 2
   },
   "mongo": {
     "uri": "mongodb://username:password@domain.mongolab.com:63439/tsc"
@@ -15,6 +22,7 @@
   "seedMongoDB": false,
   "seedDBForce": true,
   "db": "sql",
+  "tokenDb": "redis",
   "accessTokenLifetime": 21600,
   "refreshTokenLifetime": 604800
 }
