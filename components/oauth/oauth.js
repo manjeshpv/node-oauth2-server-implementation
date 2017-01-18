@@ -1,6 +1,3 @@
-/**
- * Created by Manjesh on 15-05-2016.
- */
 'use strict';
 
 let OauthServer = require('oauth2-server');
