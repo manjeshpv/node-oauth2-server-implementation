@@ -12,7 +12,7 @@ npm start or node ./bin/www
 
 ## API
 
-### Grant [/oauth/token]
+### Grant
 
 #### Password Grant
     POST /oauth/token
