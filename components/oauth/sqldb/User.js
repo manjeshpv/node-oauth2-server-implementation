@@ -22,7 +22,7 @@ module.exports = function (sequelize, DataTypes) {
     underscored: true,
     classMethods: {
       associate: function associate (models) {
-        //User.hasMany(models.OAuthClient);
+        // User.hasMany(models.OAuthClient);
       },
     },
   });

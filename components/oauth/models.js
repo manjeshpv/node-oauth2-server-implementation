@@ -85,7 +85,7 @@ function revokeAuthorizationCode (code) {
       authorization_code: code.code,
     },
   }).then(function (rCode) {
-    if(rCode) rCode.destroy();
+    if (rCode) rCode.destroy();
     /***
      * As per the discussion we need set older date
      * revokeToken will expected return a boolean in future version
@@ -197,7 +197,7 @@ function getUserFromClient (client) {
   let options = {
     where: {client_id: client.client_id},
     include: [User],
-    attributes: ['id', 'client_id', 'redirect_uri']
+    attributes: ['id', 'client_id', 'redirect_uri'],
   };
   if (client.client_secret) options.where.client_secret = client.client_secret;
 
@@ -259,4 +259,3 @@ module.exports = {
   saveAuthorizationCode: saveAuthorizationCode, //renamed saveOAuthAuthorizationCode,
   verifyScope: verifyScope,
 };
-
