@@ -128,6 +128,12 @@ FORMAT: 1A
 
 ## Company [/company]
 
+### 企业信息 [GET]
+
 ## Depatment [/department]
 
+### 企业部门信息列表 [GET]
+
 ## User [/company/user]
+
+### 用户信息列表 [GET]
