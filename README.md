@@ -10,23 +10,11 @@ npm install
 npm start or node ./bin/www
 ```
 
-## API
-
-### Grant
-
-#### Password Grant
-    POST /oauth/token
-
-#### Authorization Grant
-    POST /oauth/token
-
-#### Me
-    GET /me
 
 
 FORMAT: 1A
 
-# OAuth
+# API
 
 企业云单点认证 V1.0
 
@@ -34,14 +22,14 @@ FORMAT: 1A
 
 ## OAuth token [/oauth/token]
 
-### Client Credentials Grant [POST]
+### Client证书认证 [POST]
 
 + Request (application/x-www-form-urlencoded)
     + Attributes
 
-        + grant_type: "client_credentials" (string)
-        + client_id: "democlient" (string)
-        + client_secret: "demoscret" (string)
+        + grant_type: client_credentials (string)
+        + client_id: democlient (string)
+        + client_secret: demoscret (string)
 
 + Response (application/json)
 
@@ -72,16 +60,16 @@ FORMAT: 1A
             "accessTokenExpiresAt": "2017-02-08T15:59:16.581Z"
         }
 
-### Password Grant [POST]
+### 密码认证 [POST]
 
 + Request (application/x-www-form-urlencoded)
     + Attributes
 
-        + grant_type
-        + username
-        + password
-        + client_id
-        + client_secret
+        + grant_type: 'password' (string)
+        + username (string)
+        + password (string)
+        + client_id (string)
+        + client_secret (string)
 
 
 + Response 200 (application/json)
@@ -116,19 +104,18 @@ FORMAT: 1A
 
 ## Authorize [/authorise]
 
-### Authorize Get code [POST]
+### 授权code [POST]
 
-+ Request (applaction/json)
++ Request (applaction/x-www-form-urlencoded)
+    + Attributes
+
+        + response_type: code (string)
+        + client_id: (string)
+        + state: (string)
 
     + Headers
-            Authorization: "Bearer {token}"
 
-    + Body
-            {
-              "response_type": "code",
-              "client_id": "democlient",
-              "state": "state",
-            }
+        Authorization: Bearer {token}
 
 + Response 200 (application/json)
 
@@ -139,6 +126,8 @@ FORMAT: 1A
             "code": "848526eb87c9efbc7fd3477d712a4595ef31d9a0"
         }
 
+## Company [/company]
+
 ## Depatment [/department]
 
-## User [/company/{companyId}/user]
+## User [/company/user]
