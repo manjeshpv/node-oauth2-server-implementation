@@ -11,7 +11,7 @@ module.exports = function AuthCodeModel (sequelize, DataTypes) {
       allowNull: false,
       unique: true,
     },
-    authorization_code : DataTypes.STRING(256),
+    authorization_code: DataTypes.STRING(256),
     expires: DataTypes.DATE,
     redirect_uri: DataTypes.STRING(2000),
     scope: DataTypes.STRING,

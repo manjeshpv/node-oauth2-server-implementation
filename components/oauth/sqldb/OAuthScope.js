@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   const OAuthScope = sequelize.define('OAuthScope', {
     id: {
       type: DataTypes.INTEGER(11),

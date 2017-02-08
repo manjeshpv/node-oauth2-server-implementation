@@ -9,8 +9,8 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       unique: true,
     },
-    access_token:DataTypes.STRING(256),
-    expires:DataTypes.DATE,
+    access_token: DataTypes.STRING(256),
+    expires: DataTypes.DATE,
     scope: DataTypes.STRING,
   }, {
     tableName: 'oauth_access_tokens',

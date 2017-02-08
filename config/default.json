@@ -1,6 +1,6 @@
 {
   "sql": {
-    "database": "cas",
+    "database": "ecloud",
     "username": "root",
     "password": "root",
     "dialect": "mysql",
@@ -24,5 +24,6 @@
   "db": "sql",
   "tokenDb": "redis",
   "accessTokenLifetime": 21600,
-  "refreshTokenLifetime": 604800
+  "refreshTokenLifetime": 604800,
+  "companySplit": "#"
 }

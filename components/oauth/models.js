@@ -17,7 +17,7 @@ function getAccessToken (bearerToken) {
       include: [
         {
           model: User,
-          attributes: ['id', 'username', 'cropId'],
+          attributes: ['id', 'username', 'companyId'],
         },
         OAuthClient,
       ],
@@ -60,18 +60,16 @@ function getClient (clientId, clientSecret) {
 }
 
 function getUser (username, password) {
-  const cropSplit = '#';
-  let userName = username.split(cropSplit)[0];
-  let cropId = username.split(cropSplit)[1];
+  const companySplit = config.companySplit;
+  let userName = username.split(companySplit)[0];
+  let companyId = username.split(companySplit)[1];
 
   return User
     .findOne({
-      where: {username: userName, cropId: cropId},
-      attributes: ['id', 'username', 'password'],
+      where: {username: userName, companyId: companyId},
+      attributes: ['id', 'username', 'password', 'companyId'],
     })
     .then(function (user) {
-      console.log('user info', user);
-
       return user.password.toString() === password.toString() ? user.toJSON() : false;
     })
     .catch(function (err) {
@@ -141,8 +139,6 @@ function saveToken (token, client, user) {
         {
           client: client,
           user: user,
-          access_token: token.accessToken, // proxy
-          refresh_token: token.refreshToken, // proxy
         },
         token
       );
@@ -236,26 +232,26 @@ function getRefreshToken (refreshToken) {
 }
 
 function verifyScope (token) {
-  let user = token.user;
+  // let user = token.user;
   let client = token.client;
   let scope = token.scope;
   return (client.scope === scope && scope != null) ? scope : false;
 }
 
 module.exports = {
-  //generateOAuthAccessToken, optional - used for jwt
-  //generateAuthorizationCode, optional
-  //generateOAuthRefreshToken, - optional
+  // generateOAuthAccessToken, optional - used for jwt
+  // generateAuthorizationCode, optional
+  // generateOAuthRefreshToken, - optional
   getAccessToken: getAccessToken,
-  getAuthorizationCode: getAuthorizationCode, //getOAuthAuthorizationCode renamed to,
+  getAuthorizationCode: getAuthorizationCode, // getOAuthAuthorizationCode renamed to,
   getClient: getClient,
   getRefreshToken: getRefreshToken,
   getUser: getUser,
   getUserFromClient: getUserFromClient,
-  //grantTypeAllowed, Removed in oauth2-server 3.0
+  // grantTypeAllowed, Removed in oauth2-server 3.0
   revokeAuthorizationCode: revokeAuthorizationCode,
   revokeToken: revokeToken,
-  saveToken: saveToken,//saveOAuthAccessToken, renamed to
-  saveAuthorizationCode: saveAuthorizationCode, //renamed saveOAuthAuthorizationCode,
+  saveToken: saveToken, // saveOAuthAccessToken, renamed to
+  saveAuthorizationCode: saveAuthorizationCode, // renamed saveOAuthAuthorizationCode,
   verifyScope: verifyScope,
 };

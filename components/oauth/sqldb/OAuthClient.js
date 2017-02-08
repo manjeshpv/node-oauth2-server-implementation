@@ -3,7 +3,7 @@
 module.exports = function AppModel (sequelize, DataTypes) {
   const OAuthClient = sequelize.define('OAuthClient', {
     id: {
-      type: DataTypes.INTEGER(14),
+      type: DataTypes.STRING(40),
       autoIncrement: true,
       primaryKey: true,
       allowNull: false,
