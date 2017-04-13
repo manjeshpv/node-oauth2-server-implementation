@@ -38,7 +38,7 @@ function getAccessToken(bearerToken) {
 function getClient(clientId, clientSecret) {
   const options = {
     where: {client_id: clientId},
-    attributes: ['id', 'client_id', 'redirect_uri'],
+    attributes: ['id', 'client_id', 'redirect_uri', 'scope'],
   };
   if (clientSecret) options.where.client_secret = clientSecret;
 
@@ -64,7 +64,7 @@ function getUser(username, password) {
   return User
     .findOne({
       where: {username: username},
-      attributes: ['id', 'username', 'password'],
+      attributes: ['id', 'username', 'password', 'scope'],
     })
     .then(function (user) {
       return user.password == password ? user.toJSON() : false;
@@ -237,8 +237,12 @@ function getRefreshToken(refreshToken) {
     });
 }
 
-function validateScope(token, scope) {
-  return token.scope === scope
+function validateScope(token, client) {
+  return (user.scope === scope && client.scope === scope && scope !== null) ? scope : false
+}
+
+function verifyScope(token, scope) {
+    return token.scope === scope
 }
 
 module.exports = {
@@ -256,6 +260,7 @@ module.exports = {
   revokeToken: revokeToken,
   saveToken: saveToken,//saveOAuthAccessToken, renamed to
   saveAuthorizationCode: saveAuthorizationCode, //renamed saveOAuthAuthorizationCode,
-  verifyScope: validateScope,
+  validateScope: validateScope,
+  verifyScope: verifyScope,
 }
 

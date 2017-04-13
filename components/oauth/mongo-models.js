@@ -232,7 +232,7 @@ function getRefreshToken(refreshToken) {
 
 function validateScope(token, scope) {
   console.log("validateScope", token, scope)
-  return token.scope === scope
+   return (user.scope === scope && client.scope === scope && scope !== null) ? scope : false
 }
 
 module.exports = {
@@ -251,5 +251,6 @@ module.exports = {
   saveToken: saveToken,//saveOAuthAccessToken, renamed to
   saveAuthorizationCode: saveAuthorizationCode, //renamed saveOAuthAuthorizationCode,
   validateScope: validateScope,
+  verifyScope: verifyScope,
 }
 
