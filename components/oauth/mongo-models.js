@@ -251,6 +251,6 @@ module.exports = {
   saveToken: saveToken,//saveOAuthAccessToken, renamed to
   saveAuthorizationCode: saveAuthorizationCode, //renamed saveOAuthAuthorizationCode,
   validateScope: validateScope,
-  verifyScope: validateScope,
+  verifyScope: verifyScope,
 }
 
