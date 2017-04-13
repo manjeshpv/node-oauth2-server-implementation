@@ -237,8 +237,8 @@ function getRefreshToken(refreshToken) {
     });
 }
 
-function validateScope(token, scope) {
-  return token.scope === scope
+function validateScope(token, client) {
+  return (user.scope === scope && client.scope === scope && scope !== null) ? scope : false
 }
 
 module.exports = {
