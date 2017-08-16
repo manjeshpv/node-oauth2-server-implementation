@@ -6,8 +6,14 @@ Supports `    "oauth2-server": "^3.0.0-b2",`
 
 ```
 git clone https://github.com/divxpro/node-oauth2-server-divx
-npm install
+建议使用cnpm来安装npm依赖包
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+cnpm install
+在config目前下创建production.json, 配置数据库等参数
 npm start or node ./bin/www
+建议使用PM2来开启服务
+cnpm i pm2 -g
+npm run prod
 ```
 
 
@@ -125,15 +131,3 @@ FORMAT: 1A
             "redirectUri": "http://localhost?cb",
             "code": "848526eb87c9efbc7fd3477d712a4595ef31d9a0"
         }
-
-## Company [/company]
-
-### 企业信息 [GET]
-
-## Depatment [/department]
-
-### 企业部门信息列表 [GET]
-
-## User [/company/user]
-
-### 用户信息列表 [GET]
