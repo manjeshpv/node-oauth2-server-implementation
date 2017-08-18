@@ -24,6 +24,7 @@ module.exports = function AuthCodeModel (sequelize, DataTypes) {
       associate: function associate (models) {
         OAuthAuthorizationCode.belongsTo(models.OAuthClient, {
           foreignKey: 'client_id',
+          targetKey: 'client_id',
         });
 
         OAuthAuthorizationCode.belongsTo(models.User, {
