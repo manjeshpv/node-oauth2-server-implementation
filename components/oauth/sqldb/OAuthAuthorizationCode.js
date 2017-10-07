@@ -1,7 +1,5 @@
 'use strict';
 
-const moment = require('moment');
-
 module.exports = function AuthCodeModel (sequelize, DataTypes) {
   const OAuthAuthorizationCode = sequelize.define('OAuthAuthorizationCode', {
     id: {
