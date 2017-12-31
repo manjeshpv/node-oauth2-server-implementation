@@ -4,6 +4,7 @@
 
 module.exports = {
   sql: {
+    host: 'host_ip',
     database: 'oauth_demo',
     username: 'root',
     password: '',
