@@ -12,7 +12,7 @@ module.exports = {
     timezone: '+05:30',
   },
   mongo: {
-    uri: 'mongodb://gloryque:intranet@192.168.0.200:27017/gloryque_quarc'
+    uri: 'mongodb://localhost/oauth2'
   },
   seedDB:false,
   seedMongoDB:false,
