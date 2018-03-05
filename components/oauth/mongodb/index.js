@@ -7,6 +7,7 @@ var config = require('./../../../config')
 var mongoose = require('mongoose');
 var Promise = require('bluebird');
 console.log(config.mongo.uri)
+mongoose.Promise = Promise;
 mongoose.connect(config.mongo.uri,  
   { keepAlive: true, useMongoClient: true },
   function(err) {
