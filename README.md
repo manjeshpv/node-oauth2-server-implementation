@@ -1,6 +1,6 @@
 # Node OAuth2 Server Implementation
 
-Please refer this [Full functional OAuth 2.0 Impmementation with production example}(https://identity.parkenconsulting.com/guide/nodejs-oauth-implementation.html)
+Please refer this [Fully functional OAuth 2.0 Implementation with production example](https://identity.parkenconsulting.com/guide/nodejs-oauth-implementation.html) with [node-oauth2-server#2.4.0](https://www.npmjs.com/package/node-oauth2-server)
 
 Supports `    "oauth2-server": "^3.0.0-b2",`
 
