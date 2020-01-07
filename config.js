@@ -17,5 +17,5 @@ module.exports = {
   seedDB:false,
   seedMongoDB:false,
   seedDBForce:true,
-  db:'mongo' // mongo,sql if you want to use any SQL change dialect above in sql config
+  db:'sql' // mongo,sql if you want to use any SQL change dialect above in sql config
 }

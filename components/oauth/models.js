@@ -67,7 +67,7 @@ function getUser(username, password) {
       attributes: ['id', 'username', 'password', 'scope'],
     })
     .then(function (user) {
-      return user.password == password ? user.toJSON() : false;
+      return user.password === password ? user.toJSON() : false;
     })
     .catch(function (err) {
       console.log("getUser - Err: ", err)
@@ -237,11 +237,13 @@ function getRefreshToken(refreshToken) {
     });
 }
 
-function validateScope(token, client) {
-  return (user.scope === scope && client.scope === scope && scope !== null) ? scope : false
+function validateScope(token, client, scope) {
+  console.log("validateScope", token, client, scope);
+  return (user.scope === client.scope) ? scope : false
 }
 
 function verifyScope(token, scope) {
+    console.log("verifyScope", token, scope);
     return token.scope === scope
 }
 
@@ -260,7 +262,7 @@ module.exports = {
   revokeToken: revokeToken,
   saveToken: saveToken,//saveOAuthAccessToken, renamed to
   saveAuthorizationCode: saveAuthorizationCode, //renamed saveOAuthAuthorizationCode,
-  validateScope: validateScope,
+  // validateScope: validateScope,
   verifyScope: verifyScope,
 }
 
