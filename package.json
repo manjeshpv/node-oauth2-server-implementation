@@ -15,7 +15,7 @@
     "jade": "~1.11.0",
     "lodash": "^4.15.0",
     "lodash-cli": "^4.15.0",
-    "mongoose": "^4.4.17",
+    "mongoose": "^5.8.4",
     "morgan": "~1.6.1",
     "mysql": "^2.10.2",
     "oauth2-server": "^3.0.0-b2",
