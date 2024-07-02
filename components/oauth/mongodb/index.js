@@ -5,8 +5,12 @@
 /** https://github.com/dsquier/oauth2-server-php-mysql **/
 var config = require('./../../../config')
 var mongoose = require('mongoose');
+var Promise = require('bluebird');
 console.log(config.mongo.uri)
-mongoose.connect(config.mongo.uri, function(err) {
+mongoose.Promise = Promise;
+mongoose.connect(config.mongo.uri,  
+  { keepAlive: true, useMongoClient: true },
+  function(err) {
   if (err) return console.log(err);
   console.log('Mongoose Connected');
 });
